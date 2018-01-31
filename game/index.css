@@ -1,0 +1,66 @@
+body {
+}
+body .factor{
+  margin: auto;
+}
+body h1{
+  text-align: center;
+}
+body .image{
+  width: 300px;
+  height: 300px;
+}
+
+body img{
+  cursor: pointer;
+}
+body img:hover{
+  cursor: pointer;
+  transform: scale(1.01);
+}
+body img:active{
+  cursor: pointer;
+  transform: scale(1.05);
+}
+body #display{
+  width: 100px;
+  height: 30px;
+  margin-bottom: 20px;
+  font-size: 25px;
+  text-align: center;
+}
+
+body .input{
+  width: 150px;
+  margin-bottom: 20px;
+  padding-right: 5px;
+}
+body #name{
+  width: 150px;
+  height: 25px;
+  padding: 3px 7px;
+  margin-right: 3px;
+  font-size: 20px;
+  border-radius: 3px;
+  border: 1px solid #999;
+}
+::-webkit-input-placeholder {
+  font-weight: normal;
+  color: #aaa;
+}
+
+
+body #submit{
+  width: 80px;
+  height: 30px;
+  border: 1px solid #333;
+  border-radius: 3px;
+  color: #333;
+  padding: 10px;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+}
+body #submit:hover{
+  background: #ddd;
+}

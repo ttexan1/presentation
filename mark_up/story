@@ -1,0 +1,278 @@
+# 準備<Go言語のインストール>
+
+## homebrewのインストール
+
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+## Goのインストール
+```
+brew install go
+```
+
+---
+## 環境変数の設定
+
+*  bashの場合
+
+```
+vim ~/.bash_profile
+```
+
+* zshの場合
+
+```
+vim ~/.zshrc
+```
+
+どちらの場合でも、下記を追記して、反映（後述）する。
+
+
+```
+export GOROOT="go env GOROOT" or "/usr/local/opt/go/libexec"
+export GOPATH=$HOME
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+```
+
+*  bashの場合
+
+```
+# 反映
+source ~/.bash_profile
+```
+
+* zshの場合
+
+```
+# 反映
+source ~/.zshrc
+```
+---
+
+
+
+
+
+
+
+# 序章：なぜAPIを作るのか
+
+### APIとは
+
+* Application Programming Interface の略
+
+### WebサーバとAPIサーバの違い
+
+* Webサービスはインターネットの世界全般で提供されているサービス全般です。対して APIはプログラムから使用することを前提とした、Webサービスの窓口です。
+
+
+
+---
+### Web APIの重要性①
+
+* Amazon:
+
+  - Product Advertising APIを2003年に公開。このAPIはアフィリエイトと結びつけられており、誰でも簡単にAmazonの商品を自分のサイトから販売し、その収益の一部を得ることができる。その簡単さとブログの普及が合間って、Amazonの商品の**購入リンクがいたる所に出現**するようになり、Amazonの収益を大きく押し上げる結果となった。
+
+---
+* Twitter
+
+  - 2006年にTwitter APIを公開。非常にシンプルなサービスので、APIを使うことで、ほとんどの操作を行うことができる。そのためTwitterの投稿データを使って分析を行うサービスや、botシステムなど、様々な　周辺サービスが開発された。これによってTwitterはどんどん**情報が集まる場**になり、巨大なエコシステムが出来上がったのだ。
+
+---
+### Web APIの重要性②
+
+* AmazonもTwitterも自分たちが資金を投じて作ったシステムや、集めたデータを無料で公開しているようなもので、近視眼的に見れば損をしているようにも見えるが、新しいシステム、サービスを公開する力を持った開発者にAPIを公開することで、彼らがサービスに付加価値を与えてくれ、自らの**コアサービスの発展**につながる。
+
+___
+
+# Go言語を試してみる
+
+今日の本題はAPIなので詳しくは扱わない
+興味ある人はA tour of Goなどで勉強できる
+
+### Hello Worldの作成
+* Pathの設定してインストール手順を終わらせる
+* Hello worldの作成
+
+---
+
+### Webサーバーの作成
+
+* シンプルサーバー(一緒に書いてみましょう)
+
+```
+main.go
+```
+
+### アクセスしてみましょう
+
+```
+http://localhost:8080
+```
+---
+
+# APIサーバーの構築
+
+今日はクッキークリッカーと言うゲームでサーバーへのリクエストをしてもらいます。めっちゃ単純なゲームです。
+
+html + css + javascript
+
+---
+
+## APIエンドポイントの設計
+WebAPIにおけるエンドポイントとは、APIにアクセスするためのURI(Uniform Resource Identifier)のことを意味します。
+
+* 復習 URIの条件
+
+  - 短く入力しやすい
+  - 人間が読んで理解できる
+  - 大文字小文字が混在していない
+  - 改造しやすい
+  - サーバ側のアーキテクチャが反映されていない
+  - ルールが統一された
+
+---
+
+
+### HTTPメソッドとエンドポイント(基本形)
+
+```
+https://example.com/api/v1/users
+```
+  * GET
+  * POST
+
+```
+https://example.com/api/v1/users/:id
+```
+  * PUT/PATCH
+  * DELETE
+
+---
+### 少し複雑になった形
+  * あるユーザーの友達一覧取得,追加,削除
+
+  ```
+  https://example.com/v1/users/:id/friends
+  https://example.com/v1/users/:id/friends
+  https://example.com/v1/users/:id/friends/:id
+  ```
+
+  * 近況の編集、投稿、特定ユーザーの近況の取得、自分の友達の近況一覧
+
+  ```
+  https://example.com/api/v1/updates/:id
+  https://example.com/api/v1/updates
+  https://example.com/api/v1/users/:id/updates
+  https://example.com/api/v1/users/:id/friends/updates
+  ```
+
+  * クエリパラメーターを使う場合
+
+  ```
+  https://example.com/v1/users?name=ken
+  https://example.com/v1/users?q=ken
+  ```
+
+---
+
+## レスポンス設計
+
+例えばGETリクエストに対してどんなデータをどんな形式で返すのが良いでしょうか？
+
+ステータスコードはどうしたらいいでしょうか？
+
+データフォーマットの指定方法はどうしたらいいでしょうか？
+
+---
+### データ形式
+
+* JSON
+
+* XML
+
+
+---
+### ステータスコード
+
+* 100番台
+* 200番台
+* 300番台
+* 400番台
+* 500番台
+
+---
+### データフォーマットの指定方法
+
+* クエリパラメーターを使用
+* 拡張子を使う
+* リクエストヘッダでメディアタイプを指定
+
+
+---
+
+### curlについて
+
+* 基本形
+
+```
+curl http://example.com/index.html
+```
+
+* 基本オプション
+ - -H : ヘッダーを指定
+ - -X : methodを指定(指定しない場合はGET)
+ - -d : データを指定
+
+---
+### APIの作成
+
+#### 1. スコアの取得
+
+[GET] /api/v1/scores
+
+```
+curl -X POST 'http://localhost:8080/api/v1/scores' -d '{"username": "yourname", score: 100}'
+```
+
+#### 2. スコアの送信
+
+[POST] /api/v1/scores
+
+```
+curl -X POST 'http://localhost:8080/api/v1/scores' -d '{"username": "yourname", score: 100}'
+```
+---
+
+### Webフロント(javascript)からアクセスしてみる
+
+ソースコードをダウンロードして、`index.html`を開いてください。
+
+APIを利用している部分の解説（XMLHttpRequestを使用）
+
+```
+go get github.com/rs/cors
+```
+
+---
+
+
+
+# 終章：良いAPIのための補足
+
+* HTTPの使用を最大限利用する
+* ステータスコードを正しく使う
+* キャッシュはきちんとしておく
+* メディアタイプの指定
+* バージョン管理のしやすさ
+
+
+
+---
+
+### 発展
+* ファイル読み込み
+* ファイル書き込み
+* Swagger

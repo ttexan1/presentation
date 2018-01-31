@@ -1,0 +1,46 @@
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji": 100}
+{"username": "tetsuji": 100}
+{"username": "tetsuji": 100}
+{"username": "tetsuji", score: 100}
+1
+1
+
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+{"username": "tetsuji", score: 100}
+14
+14
+
+
+
+
+
+{3
+{3
+{ name:asdf,point:1}
+{ name: asdf,point: 3 }
+{ name: asdf, point: 3 }
+
+
+{ name: , point: 5 }
+
+{ name: name, point: 5 }
+
+{ name: name, point: 10 }
+{ name: name2, point: 10 }
+null
+{"name":"tetsuji","point":10}

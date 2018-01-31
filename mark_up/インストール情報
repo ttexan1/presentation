@@ -1,0 +1,76 @@
+## homebrewのインストール
+
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+```
+
+## Goのインストール
+brew install go
+
+## 環境変数の設定
+
+*  bashの場合
+
+```
+vim ~/.bash_profile
+```
+
+* zshの場合
+
+```
+vim ~/.zshrc
+```
+
+どちらの場合でも、下記を追記して、反映（後述）する。
+
+
+```
+export GOROOT="go env GOROOT" or "/usr/local/opt/go/libexec"
+export GOPATH=$HOME
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+```
+
+*  bashの場合
+
+```
+# 反映
+source ~/.bash_profile
+```
+
+* zshの場合
+
+```
+# 反映
+source ~/.zshrc
+```
+
+## Goのソースコードを置く場所のルール
+
+```
+$GOPATH（ホームディレクトリ）/src/github.com/(Githubのユーザー名)/プロジェクト名/
+```
+
+例)
+
+```
+mkdir -p ~/src/github.com/ttexan1/hello
+cd ~/src/github.com/ttexan1/hello
+atom main.go
+```
+
+```
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("Hello World!!")
+}
+```
+
+```
+go run main.go
+```
+
+`Hello World!!`と表示されれば成功。
