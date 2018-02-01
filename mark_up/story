@@ -1,5 +1,9 @@
 # 準備<Go言語のインストール>
 
+```
+git clone https://github.com/ttexan1/presentation.git
+```
+---
 ## homebrewのインストール
 
 ```
@@ -25,8 +29,8 @@ vim ~/.bash_profile
 ```
 vim ~/.zshrc
 ```
-
-どちらの場合でも、下記を追記して、反映（後述）する。
+---
+どちらの場合でも、下記を追記を追加。
 
 
 ```
@@ -35,24 +39,19 @@ export GOPATH=$HOME
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 ```
 
+反映(できない可能性あり)
 *  bashの場合
 
 ```
-# 反映
 source ~/.bash_profile
 ```
 
 * zshの場合
 
 ```
-# 反映
 source ~/.zshrc
 ```
 ---
-
-
-
-
 
 
 
@@ -75,7 +74,7 @@ source ~/.zshrc
 
   - Product Advertising APIを2003年に公開。このAPIはアフィリエイトと結びつけられており、誰でも簡単にAmazonの商品を自分のサイトから販売し、その収益の一部を得ることができる。その簡単さとブログの普及が合間って、Amazonの商品の**購入リンクがいたる所に出現**するようになり、Amazonの収益を大きく押し上げる結果となった。
 
----
+
 * Twitter
 
   - 2006年にTwitter APIを公開。非常にシンプルなサービスので、APIを使うことで、ほとんどの操作を行うことができる。そのためTwitterの投稿データを使って分析を行うサービスや、botシステムなど、様々な　周辺サービスが開発された。これによってTwitterはどんどん**情報が集まる場**になり、巨大なエコシステムが出来上がったのだ。
@@ -103,7 +102,7 @@ ___
 * シンプルサーバー(一緒に書いてみましょう)
 
 ```
-main.go
+go run main.go
 ```
 
 ### アクセスしてみましょう
@@ -117,14 +116,19 @@ http://localhost:8080
 
 今日はクッキークリッカーと言うゲームでサーバーへのリクエストをしてもらいます。めっちゃ単純なゲームです。
 
-html + css + javascript
+game(html + css + javascript)ディレクトリに移動して
+
+```
+open index.html
+```
+
 
 ---
 
 ## APIエンドポイントの設計
 WebAPIにおけるエンドポイントとは、APIにアクセスするためのURI(Uniform Resource Identifier)のことを意味します。
 
-* 復習 URIの条件
+* 復習 良いとされるURIの条件
 
   - 短く入力しやすい
   - 人間が読んで理解できる
@@ -132,6 +136,8 @@ WebAPIにおけるエンドポイントとは、APIにアクセスするため�
   - 改造しやすい
   - サーバ側のアーキテクチャが反映されていない
   - ルールが統一された
+
+
 
 ---
 
@@ -191,27 +197,49 @@ https://example.com/api/v1/users/:id
 
 * JSON
 
+```
+{name: "tetsuji", point: 10000}
+```
+
+
 * XML
 
+```
+<?xml version="1.0">
+<all_movies>
+
+  <movie>
+    <title>ショーシャンクの空</title>
+    <point>90</point>
+    <review>とても良い</review>
+  </movie>
+
+  <movie>
+    <title>タイタニック</title>
+    <point>10</point>
+    <review>長い</review>
+  </movie>
+
+</all_movies>
+```
+---
+### データフォーマットの指定方法
+
+* クエリパラメーターを使用 => ?format=xml
+* 拡張子を使う => .json
+* リクエストヘッダでメディアタイプを指定 => accept application/JSON
 
 ---
 ### ステータスコード
 
 * 100番台
-* 200番台
-* 300番台
-* 400番台
-* 500番台
+* 200番台(200,201,202,204)
+* 300番台(301,302,303,304,307)
+* 400番台(400,401,403,404,405,406,410,415)
+* 500番台(500,502,503)
 
 ---
-### データフォーマットの指定方法
 
-* クエリパラメーターを使用
-* 拡張子を使う
-* リクエストヘッダでメディアタイプを指定
-
-
----
 
 ### curlについて
 
@@ -229,28 +257,17 @@ curl http://example.com/index.html
 ---
 ### APIの作成
 
-#### 1. スコアの取得
+概論の終わったところで実際にgoでデータを受け取るサーバーを作って見ましょう。
 
-[GET] /api/v1/scores
 
-```
-curl -X POST 'http://localhost:8080/api/v1/scores' -d '{"username": "yourname", score: 100}'
-```
-
-#### 2. スコアの送信
-
-[POST] /api/v1/scores
-
-```
-curl -X POST 'http://localhost:8080/api/v1/scores' -d '{"username": "yourname", score: 100}'
-```
 ---
 
 ### Webフロント(javascript)からアクセスしてみる
 
-ソースコードをダウンロードして、`index.html`を開いてください。
-
 APIを利用している部分の解説（XMLHttpRequestを使用）
+
+* cors
+  - Cross Origin Resource Sharing
 
 ```
 go get github.com/rs/cors
